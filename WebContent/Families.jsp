@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="d" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="model.Owners" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,30 +13,51 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<div class="container col-lg-9">
+
+	<div class="container col-lg-9" style="padding-top: 15px">
 		<div class="row">
-		<c:forEach items="${requestScope.allPets}" var="currentpet">			 	
-		 	<div class="col-md-4" style="text-align: center;">
-			<div class='card'>
-	          <div class='info'>
-	            <h2 class='title'></h2>
-	            <p class='description'>
-	            	${currentpet.petId}
-	            </p>
-	            <p class='description'>
-	            	${currentpet.petName}
-	            </p>
-	            <p class='description'>
-	            	${currentpet.gotchaDate} 		
-	            </p>
-	            <p class='description'>
-	            	${currentpet.owner}	
-	            </p>
-	            
-	          </div>
-	        </div>
+		
+		<c:forEach items="${requestScope.allPets}" var="currentpet">
+		<form class="col-4"  method="post" action="navigationServlet" >
+		 	<div class="row">
+			 	<div class="col-12" style="text-align: center;">
+					<div class='card'>
+			          <div class='info'>
+			            <h2 class='title'>${currentpet.petName}</h2>           
+			            <div class='description'>
+			            	<p>ID: ${currentpet.petId}</p>
+			            	<p>Breed: ${currentpet.petBreed}</p>
+			            	<p>Gotcha Date: ${currentpet.gotchaDate}</p>
+			            	
+			            </div>
+	          		  </div>
+			        <input type="hidden" value="${currentpet.petId}" name="id">
+			        <input type="hidden" value="${currentpet.petName}" name="petName">
+			        <input type="hidden" value="${currentpet.petBreed}" name="petBreed">
+			        <input type="hidden" value="${currentpet.gotchaDate}" name="gotchaDate">
+			        <div class="row">
+			        	<div class="col-6">
+							<input class="btn btn-primary" type="submit" value="edit" name="doThisToPet">
+						</div>
+						<div class="col-6">
+							<input class="btn btn-danger" type="submit" value="delete" name="doThisToPet">
+						</div>
+			        </div>	
+				</div>
+				</div>
+				
+				
+					
 			</div>
+		</form>
 		</c:forEach>
+		<div class="col-12" style="text-align: center;">
+				<d:forEach items="${requestScope.allOwners}" var="currentowner">
+					<p>${currentowner.name } has id: ${currentowner.ownersId }</p>
+					
+				</d:forEach>
+				</div>
+		
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
